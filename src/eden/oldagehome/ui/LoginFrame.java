@@ -9,6 +9,8 @@ public class LoginFrame {
 	
     frame.setSize(300, 200);
     frame.setVisible(true);
+    
+    
 
 }
 }
