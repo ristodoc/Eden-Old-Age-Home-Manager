@@ -1,32 +1,18 @@
 package eden.oldagehome.model;
 
 public class User {
-	private int id;
+	private String id;
 	private String name;
+	private String password;
 	private String role;
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
+	public User(String id, String password, String name){
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
+		this.password=password;
 		this.name = name;
 	}
-
-	public String getRole() {
-		return role;
+	
+	public boolean credentialCheck(String password){
+		return this.password.equals(password);
 	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
 }
