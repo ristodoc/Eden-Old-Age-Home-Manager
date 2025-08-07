@@ -9,11 +9,7 @@ class Authenticator {
     }
 
     public AuthenticationResult authenticate(String id, String password){
-        User user = userRepository.findById(id);
-        if(id.equals(user!=null&&user.checkPassword(password)){
-            return AuthenticationResult(true,user.getRole());
-        }
-        return AuthenticationResult(false,user.getRole());
+       
     }
 
     public static class AuthenticationResult {
