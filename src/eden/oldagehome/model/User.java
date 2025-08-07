@@ -1,12 +1,12 @@
 package eden.oldagehome.model;
 
-public class User {
+public abstract class User {
 	private String id;
 	private String name;
 	private String password;
 	private String role;
 
-	public User(String id, String password, String name){
+	protected User(String id, String password, String name){
 		this.id = id;
 		this.password=password;
 		this.name = name;
