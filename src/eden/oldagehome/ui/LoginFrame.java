@@ -39,18 +39,24 @@ public class LoginFrame extends JFrame {
     }
 
     private void login() {
-        String username = usernameField.getText();
-        String password = new String(passwordField.getPassword());
+        String username = usernameField.getText().trim();
+        String password = new String(passwordField.getPassword()).trim();
 
         Authenticator.AuthenticationResult result = authenticator.authenticate(username, password);
 
         if (result.isSuccess()) {
             JOptionPane.showMessageDialog(this, "Login successful! Role: " + result.getRole());
             // Open the main application window based on the role
-            if ("Admin".equals(result.getRole())) {
-                new AdminPanel().setVisible(true);
-            } else {
-                new WardPanel().setVisible(true);
+            switch (result.getRole()) {
+                case "Admin":
+                    new AdminPanel().setVisible(true);
+                    break;
+                case "WardEmployee":
+                    new WardPanel().setVisible(true);
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(this, "Unknown role: " + result.getRole(), "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
             }
             dispose();
         } else {

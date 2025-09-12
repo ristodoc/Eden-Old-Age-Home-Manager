@@ -5,11 +5,12 @@ package eden.oldagehome.model;
  */
 public class WardEmployee extends User {
 
-    private Ward assignedWard;
+    private String wardId; // The ward this employee is assigned to
+    private Ward assignedWard; // The Ward object assigned to this employee
 
-    public WardEmployee(String userId, String name, String email, String password, Ward assignedWard) {
-        super(userId, name, email, password);
-        this.assignedWard = assignedWard;
+    public WardEmployee(String userId, String name, String email, String password, String role, String wardId) {
+        super(userId, name, email, password, role); // Call the User constructor
+        this.wardId = wardId;
     }
 
     // WardEmployee-specific methods
@@ -73,8 +74,15 @@ public class WardEmployee extends User {
         this.setPassword(newPassword);
         System.out.println("Ward Employee " + this.name + " changed password.");
     }
-
     // Getters and Setters
+
+    public String getWardId() {
+        return wardId;
+    }
+
+    public void setWardId(String wardId) {
+        this.wardId = wardId;
+    }
 
     public Ward getAssignedWard() {
         return assignedWard;
@@ -82,5 +90,16 @@ public class WardEmployee extends User {
 
     public void setAssignedWard(Ward assignedWard) {
         this.assignedWard = assignedWard;
+    }
+    
+
+    @Override
+    public String toString() {
+        return "WardEmployee{" +
+                "wardId='" + wardId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

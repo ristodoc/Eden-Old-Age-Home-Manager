@@ -9,7 +9,7 @@ public abstract class User {
     protected String name;
     protected String email;
     protected String password; // In a real application, this should be securely stored (e.g., hashed)
-    protected String role;
+    private String role;
 
     public User(String userId, String name, String email, String password, String role) {
         this.userId = userId;
@@ -53,20 +53,24 @@ public abstract class User {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getRole() {
         return role;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "userId='" + userId + ''' +
-                ", name='" + name + ''' +
-                ", email='" + email + ''' +
+                "userId='" + userId + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

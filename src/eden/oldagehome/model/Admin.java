@@ -12,7 +12,7 @@ public class Admin extends User {
     private double totalBudget;
 
     public Admin(String userId, String name, String email, String password, double totalBudget) {
-        super(userId, name, email, password);
+        super(userId, name, email, password, "Admin"); // Pass "Admin" as the role
         this.totalBudget = totalBudget;
         this.wards = new ArrayList<>();
     }
