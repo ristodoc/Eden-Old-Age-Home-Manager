@@ -98,8 +98,8 @@ public class Ward {
     @Override
     public String toString() {
         return "Ward{" +
-                "wardId='" + wardId + ''' +
-                ", name='" + name + ''' +
+                "wardId='" + wardId + '\'' +
+                ", name='" + name + '\'' +
                 ", patientCount=" + patients.size() +
                 '}';
     }

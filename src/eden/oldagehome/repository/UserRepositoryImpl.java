@@ -24,7 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
                                   resultSet.getString("name"),
                                   resultSet.getString("email"),
                                   resultSet.getString("password"),
-                                  resultSet.getString("role")) {
+                                  resultSet.getString("user_type")) {
                         @Override
                         public void login() {}
 

@@ -16,7 +16,7 @@ public class DBConnection {
 
     // Database credentials - It's recommended to use a more secure way to store credentials
     private static final String USER = "root"; // replace with your db username
-    private static final String PASS = "password"; // replace with your db password
+    private static final String PASS = "cs1980"; // replace with your db password
 
     // Private constructor to prevent instantiation
     private DBConnection() {}

@@ -70,8 +70,8 @@ public class Medication {
     @Override
     public String toString() {
         return "Medication{" +
-                "name='" + name + ''' +
-                ", dosage='" + dosage + ''' +
+                "name='" + name + '\'' +
+                ", dosage='" + dosage + '\'' +
                 ", quantityLeft=" + quantityLeft +
                 '}';
     }

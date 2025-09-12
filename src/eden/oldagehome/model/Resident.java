@@ -116,10 +116,10 @@ public class Resident {
     @Override
     public String toString() {
         return "Resident{" +
-                "residentId='" + residentId + ''' +
-                ", name='" + name + ''' +
+                "residentId='" + residentId + '\'' +
+                ", name='" + name + '\'' +
                 ", age=" + age +
-                ", disease='" + disease + ''' +
+                ", disease='" + disease + '\'' +
                 '}';
     }
 }
