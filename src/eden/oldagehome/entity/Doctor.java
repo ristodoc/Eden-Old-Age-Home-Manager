@@ -1,4 +1,4 @@
-package eden.oldagehome.entity;
+package eden..oldagehome.entity;
 
 import java.util.List;
 
