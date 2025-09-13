@@ -5,15 +5,22 @@ public class Medication {
     private String dosage;
     private int quantityLeft;
     private int monthlyRequirement;
-
+    
+    public Medication(String name, String dosage, int quantityLeft, int monthlyRequirement) {
+        this.name = name;
+        this.dosage = dosage;
+        this.quantityLeft = quantityLeft;
+        this.monthlyRequirement = monthlyRequirement;
+    }
+    
     public boolean isRefillNeeded() {
         return quantityLeft < (monthlyRequirement * 0.2); // 20% threshold
     }
-
+    
     public void refill(int amount) {
         quantityLeft += amount;
     }
-
+    
     // Getters and setters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }

@@ -1,5 +1,6 @@
 package eden.oldagehome.entity;
 
+import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -9,12 +10,24 @@ public class DoctorVisit {
     private Doctor doctor;
     private Resident resident;
     private List<String> prescriptions;
-
-    public String getSummary() {
-        return "Visit on " + date + " by Dr. " + doctor.getName() +
-                ". Notes: " + notes + ". Prescriptions: " + String.join(", ", prescriptions);
+    
+    public DoctorVisit(LocalDate date, String notes, Doctor doctor, Resident resident) {
+        this.date = date;
+        this.notes = notes;
+        this.doctor = doctor;
+        this.resident = resident;
+        this.prescriptions = new ArrayList<>();
     }
-
+    
+    public String getSummary() {
+        return "Visit on " + date + " by Dr. " + doctor.getName() + 
+               ". Notes: " + notes + ". Prescriptions: " + String.join(", ", prescriptions);
+    }
+    
+    public void addPrescription(String prescription) {
+        prescriptions.add(prescription);
+    }
+    
     // Getters and setters
     public LocalDate getDate() { return date; }
     public void setDate(LocalDate date) { this.date = date; }

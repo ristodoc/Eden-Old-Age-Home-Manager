@@ -1,6 +1,8 @@
 package eden.oldagehome.entity;
 
 import java.util.List;
+import java.util.ArrayList;
+
 
 public class Resident {
     private String residentId;
@@ -11,18 +13,25 @@ public class Resident {
     private List<Medication> medications;
     private List<DoctorVisit> doctorVisits;
     
+    public Resident(String residentId, String name, int age, String disease, String diet) {
+        this.residentId = residentId;
+        this.name = name;
+        this.age = age;
+        this.disease = disease;
+        this.diet = diet;
+        this.medications = new ArrayList<>();
+        this.doctorVisits = new ArrayList<>();
+    }
+    
     public boolean addMedication(Medication m) {
-        // Implementation to add medication
         return medications.add(m);
     }
     
     public boolean removeMedication(String name) {
-        // Implementation to remove medication
         return medications.removeIf(m -> m.getName().equals(name));
     }
     
     public boolean needsRefill() {
-        // Implementation to check if refill is needed
         return medications.stream().anyMatch(Medication::isRefillNeeded);
     }
     

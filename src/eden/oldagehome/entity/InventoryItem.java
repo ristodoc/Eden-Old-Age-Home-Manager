@@ -5,15 +5,22 @@ public class InventoryItem {
     private String name;
     private int quantityLeft;
     private int monthlyRequirement;
-
+    
+    public InventoryItem(String itemId, String name, int quantityLeft, int monthlyRequirement) {
+        this.itemId = itemId;
+        this.name = name;
+        this.quantityLeft = quantityLeft;
+        this.monthlyRequirement = monthlyRequirement;
+    }
+    
     public boolean isRestockNeeded() {
         return quantityLeft < (monthlyRequirement * 0.3); // 30% threshold
     }
-
+    
     public void restock(int amount) {
         quantityLeft += amount;
     }
-
+    
     // Getters and setters
     public String getItemId() { return itemId; }
     public void setItemId(String itemId) { this.itemId = itemId; }
