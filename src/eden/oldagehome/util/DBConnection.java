@@ -4,37 +4,33 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * DBConnection is a utility class for managing the database connection.
- */
 public class DBConnection {
+    private static final String URL = "jdbc:mysql://localhost:3306/old_age_home_db";
+    private static final String USER = "cs1980";
+    private static final String PASSWORD = "cs1980";
 
-    // JDBC driver name and database URL
-    private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    // Replace "eden_db" with your actual database name
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/eden_db?useSSL=false&serverTimezone=UTC";
+    private static Connection connection = null;
 
-    // Database credentials - It's recommended to use a more secure way to store credentials
-    private static final String USER = "root"; // replace with your db username
-    private static final String PASS = "cs1980"; // replace with your db password
-
-    // Private constructor to prevent instantiation
-    private DBConnection() {}
-
-    /**
-     * Returns a new database connection.
-     *
-     * @return A Connection object to the database.
-     * @throws SQLException if a database access error occurs.
-     */
-    public static Connection getConnection() throws SQLException {
+    static {
         try {
-            // Register JDBC driver
-            Class.forName(JDBC_DRIVER);
-            // Open a connection
-            return DriverManager.getConnection(DB_URL, USER, PASS);
-        } catch (ClassNotFoundException e) {
-            throw new SQLException("JDBC Driver not found", e);
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Connection getConnection() {
+        return connection;
+    }
+
+    public static void closeConnection() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
