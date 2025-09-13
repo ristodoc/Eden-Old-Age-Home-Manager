@@ -13,6 +13,7 @@ public class Resident {
     private int age;
     private String disease;
     private String diet;
+    private String wardId;
     private List<Medication> medications;
     private List<DoctorVisit> doctorVisits;
 
@@ -111,6 +112,14 @@ public class Resident {
 
     public void setDoctorVisits(List<DoctorVisit> doctorVisits) {
         this.doctorVisits = doctorVisits;
+    }
+
+    public String getWardId() {
+        return wardId;
+    }
+
+    public void setWardId(String wardId) {
+        this.wardId = wardId;
     }
 
     @Override

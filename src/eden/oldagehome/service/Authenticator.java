@@ -25,20 +25,28 @@ public class Authenticator {
 
         if (user != null && PasswordUtils.verifyPassword(password, user.getPassword())) {
             // Authentication successful
-            return new AuthenticationResult(true, user.getRole());
+            return new AuthenticationResult(true, user.getRole(), user);
         }
 
         // Authentication failed
-        return new AuthenticationResult(false, null);
+        return new AuthenticationResult(false, null, null);
     }
 
     public static class AuthenticationResult {
         private final boolean success;
         private final String role;
+        private final User user;
 
         public AuthenticationResult(boolean success, String role) {
             this.success = success;
             this.role = role;
+            this.user = null;
+        }
+        
+        public AuthenticationResult(boolean success, String role, User user) {
+            this.success = success;
+            this.role = role;
+            this.user = user;
         }
 
         public boolean isSuccess() {
@@ -47,6 +55,10 @@ public class Authenticator {
 
         public String getRole() {
             return role;
+        }
+        
+        public User getUser() {
+            return user;
         }
     }
 }
