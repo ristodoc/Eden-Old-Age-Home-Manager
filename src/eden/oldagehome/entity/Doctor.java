@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 
-class Doctor {
+public class Doctor {
     private String doctorId;
     private String name;
     private String specialization;

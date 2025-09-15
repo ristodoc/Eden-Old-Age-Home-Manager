@@ -4,7 +4,7 @@ package eden.oldagehome.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-class Admin extends User {
+public class Admin extends User {
     private List<Ward> wards;
     private double totalBudget;
     

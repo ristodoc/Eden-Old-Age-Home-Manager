@@ -4,7 +4,8 @@ package eden.oldagehome.entity;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-class LoginLogger {
+
+public class LoginLogger {
     private static LoginLogger instance;
     private List<LoginEntry> logs;
     
