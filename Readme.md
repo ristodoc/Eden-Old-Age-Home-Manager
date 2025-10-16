@@ -2,45 +2,7 @@
 
 A comprehensive Java-based management system for old age homes, designed to streamline operations and improve care quality for residents.
 
-## Features
 
-### 🏠 Dashboard
-- **Overview Cards**: Real-time statistics for residents, activities, alerts, and occupancy trends
-- **Personalized Greeting**: Welcome message with user-specific information
-- **Quick Access**: Easy navigation to all major system functions
-
-### 👥 Resident Management
-- **Resident Profiles**: Complete resident information including medical history, medications, and care levels
-- **Search & Filter**: Advanced search capabilities to quickly find residents
-- **Status Tracking**: Real-time status updates (Stable, Needs Attention, etc.)
-- **Medication Management**: Track medication schedules and refill requirements
-- **Care Level Classification**: Automatic categorization (Independent, Assisted Living, Memory Care)
-
-### 👨‍⚕️ Staff Management
-- **Staff Directory**: Complete staff information with roles and departments
-- **Role-based Access**: Different access levels for Admin, Doctors, Nurses, and Caregivers
-- **Schedule Management**: Track staff schedules and availability
-- **Performance Monitoring**: Staff activity and performance tracking
-
-### 📅 Activities Management
-- **Event Scheduling**: Plan and manage resident activities and events
-- **Participation Tracking**: Monitor resident engagement in activities
-- **Resource Management**: Track locations and equipment for activities
-- **Status Updates**: Real-time activity status (Scheduled, Completed, Cancelled)
-
-### 📊 Reporting System
-- **Occupancy Reports**: Track resident capacity and trends
-- **Medication Reports**: Monitor medication usage and compliance
-- **Staff Reports**: Analyze staff performance and schedules
-- **Financial Reports**: Budget tracking and expense management
-- **Health Reports**: Resident health status and medical visit tracking
-- **Activities Reports**: Participation and engagement analytics
-
-### ⚙️ Settings & Configuration
-- **User Management**: Create and manage user accounts with role-based permissions
-- **Ward Configuration**: Set up and manage different wards and room assignments
-- **Notification Settings**: Configure alerts and notification preferences
-- **Data Backup**: Automated backup and restore functionality
 
 ## Technology Stack
 
