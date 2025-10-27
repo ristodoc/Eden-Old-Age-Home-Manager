@@ -1,4 +1,3 @@
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  * @author chris
  */
 
-public class EResidentManagement1 extends javax.swing.JFrame {
+public class EInventoryManagement extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AResidentManagement.class.getName());
     private String employeeWard;
@@ -27,34 +26,32 @@ public class EResidentManagement1 extends javax.swing.JFrame {
     /**
      * Creates new form Employee Dashboard
      */
-    public EResidentManagement1() {
+    public EInventoryManagement() {
         this(null); // Default constructor for backward compatibility
     }
     
     /**
      * Creates new form Employee Dashboard with employee ward
      */
-    public EResidentManagement1(String employeeWard) {
+    public EInventoryManagement(String employeeWard) {
         this.employeeWard = employeeWard;
         initComponents();
-        ResidentViewTable.setDefaultEditor(Object.class, null);
+        InventoryViewTable.setDefaultEditor(Object.class, null);
         updateWardLabel();
-        setupEmployeeRestrictions();
         table_update();
-        
-        ResidentViewTable.getSelectionModel().addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                int selectedRow = ResidentViewTable.getSelectedRow();
-                if (selectedRow >= 0) {
-                    DefaultTableModel model = (DefaultTableModel) ResidentViewTable.getModel();
-                    String name = (String) model.getValueAt(selectedRow, 1); // Name column
-                    String ward = (String) model.getValueAt(selectedRow, 2); // Ward column
-                    txtname.setText(name);
-                    txtward.setText(ward);
+        // Add mouse listener to table for row selection to populate name field
+        InventoryViewTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = InventoryViewTable.getSelectedRow();
+                if (row >= 0) {
+                    String medName = InventoryViewTable.getValueAt(row, 1).toString();
+                    txtname.setText(medName);
                 }
             }
-    });
-                }
+        });
+    }
+    
+                
     
     Connection con1;
     PreparedStatement pst;
@@ -79,14 +76,17 @@ public class EResidentManagement1 extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         txtname = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        findButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        refillButton = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txtward = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        txtward1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        ResidentViewTable = new javax.swing.JTable();
+        InventoryViewTable = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        addButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -185,47 +185,42 @@ public class EResidentManagement1 extends javax.swing.JFrame {
         );
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jLabel7.setText("Resident");
+        jLabel7.setText("Inventory");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 12), new java.awt.Color(102, 102, 102))); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel8.setText("Name : ");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton1.setText("Find");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        findButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        findButton.setText("Find");
+        findButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                findButtonActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton2.setText("Delete");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                deleteButtonActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton3.setText("Add");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        refillButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        refillButton.setText("Refill");
+        refillButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton4.setText("Edit");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                refillButtonActionPerformed(evt);
             }
         });
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jLabel10.setText("Ward : ");
+        jLabel10.setText("Quantitiy : ");
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jLabel11.setText("Amount Spend : ");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -235,15 +230,16 @@ public class EResidentManagement1 extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
-                    .addComponent(jLabel10))
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtname, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
                     .addComponent(txtward)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(findButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(refillButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtward1))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -257,34 +253,60 @@ public class EResidentManagement1 extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(txtward, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(txtward1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(findButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4)
+                .addComponent(refillButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
-                .addGap(41, 41, 41))
+                .addComponent(deleteButton)
+                .addContainerGap(88, Short.MAX_VALUE))
         );
 
-        ResidentViewTable.setModel(new javax.swing.table.DefaultTableModel(
+        InventoryViewTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id", "Name", "Ward"
+                "Id", "Name", "dosage", "quanitity_left"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(ResidentViewTable);
+        jScrollPane1.setViewportView(InventoryViewTable);
+
+        addButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(171, 171, 171)
+                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(184, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(addButton)
+                .addGap(0, 68, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -294,12 +316,16 @@ public class EResidentManagement1 extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 79, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -308,13 +334,13 @@ public class EResidentManagement1 extends javax.swing.JFrame {
                 .addGap(54, 54, 54)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(115, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGap(62, 62, 62))))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -337,52 +363,35 @@ public class EResidentManagement1 extends javax.swing.JFrame {
      * @param ward The ward to validate access for
      * @return true if employee has access, false otherwise
      */
-    private boolean validateWardAccess(String ward) {
-        return employeeWard != null && employeeWard.equals(ward);
-    }
+    
     
     /**
      * Sets up UI restrictions for employees
      */
-    private void setupEmployeeRestrictions() {
-        if (employeeWard != null && !employeeWard.isEmpty()) {
-            // Set the ward field to the employee's ward and make it read-only
-            txtward.setText(employeeWard);
-            txtward.setEditable(false);
-            txtward.setBackground(new java.awt.Color(240, 240, 240)); // Light gray background
-            
-        }
-    }
+    
     
     public void table_update(){
         try {
-            int c;
             Class.forName("com.mysql.cj.jdbc.Driver");
             con1 = DriverManager.getConnection("jdbc:mysql://localhost/eden","root","");
             
             // If employee ward is specified, filter residents by ward
-            String query;
-            if (employeeWard != null && !employeeWard.isEmpty()) {
-                query = "SELECT * FROM residents WHERE ward_id = ?";
-                pst = con1.prepareStatement(query);
-                pst.setString(1, employeeWard);
-            } else {
-                query = "SELECT * FROM residents";
-                pst = con1.prepareStatement(query);
-            }
+            String query = "SELECT medication_id, name, dosage, quantity_left, " +
+                         "monthly_requirement, last_refill_date FROM medications";
+            pst = con1.prepareStatement(query);
             
             ResultSet rs = pst.executeQuery();
-            ResultSetMetaData rsd = rs.getMetaData();
-            c = rsd.getColumnCount();
-            
-            DefaultTableModel d = (DefaultTableModel)ResidentViewTable.getModel();
+            DefaultTableModel d = (DefaultTableModel)InventoryViewTable.getModel();
             d.setRowCount(0);
        
             while(rs.next()){
                 Vector<String> v2 = new Vector<>();
-                v2.add(rs.getString("resident_id"));
+                v2.add(rs.getString("medication_id"));
                 v2.add(rs.getString("name"));
-                v2.add(rs.getString("ward_id"));
+                v2.add(rs.getString("dosage"));
+                v2.add(rs.getString("quantity_left"));
+                v2.add(rs.getString("monthly_requirement"));
+                v2.add(rs.getString("last_refill_date"));
                 d.addRow(v2);
             }
         } catch (ClassNotFoundException ex) {
@@ -393,209 +402,219 @@ public class EResidentManagement1 extends javax.swing.JFrame {
     }
     
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+    private void findButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findButtonActionPerformed
         try {
             String name = txtname.getText().trim();
-            String ward = txtward.getText().trim();
             
-            // Build query with employee ward restriction
-            StringBuilder query = new StringBuilder("SELECT * FROM residents WHERE ward_id = ?");
-            int parameterIndex = 1;
-            
-            if (!name.isEmpty()) {
-                query.append(" AND name LIKE ?");
-            }
-            if (!ward.isEmpty()) {
-                query.append(" AND ward_id LIKE ?");
+            if (name.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter a medication name to search");
+                return;
             }
             
             Class.forName("com.mysql.cj.jdbc.Driver");
             con1 = DriverManager.getConnection("jdbc:mysql://localhost/eden","root","");
-            pst = con1.prepareStatement(query.toString());
+            String query = "SELECT medication_id, name, dosage, quantity_left, monthly_requirement, last_refill_date " +
+                          "FROM medications WHERE name LIKE ?";
+            pst = con1.prepareStatement(query);
+            pst.setString(1, "%" + name + "%");
             
-            // Always set employee ward as first parameter
-            pst.setString(parameterIndex++, employeeWard);
-            
-            if (!name.isEmpty()) {
-                pst.setString(parameterIndex++, "%" + name + "%");
-            }
-            if (!ward.isEmpty()) {
-                pst.setString(parameterIndex, "%" + ward + "%");
-            }
-            
-            ResultSet rs = pst.executeQuery();            
-            DefaultTableModel d = (DefaultTableModel)ResidentViewTable.getModel();
+            ResultSet rs = pst.executeQuery();
+            DefaultTableModel d = (DefaultTableModel)InventoryViewTable.getModel();
             d.setRowCount(0);
             
-            while(rs.next()){
+            boolean found = false;
+            while(rs.next()) {
+                found = true;
                 Vector<String> v2 = new Vector<>();
-                v2.add(rs.getString("resident_id"));
+                v2.add(rs.getString("medication_id"));
                 v2.add(rs.getString("name"));
-                v2.add(rs.getString("ward_id"));
-                d.addRow(v2.toArray());
+                v2.add(rs.getString("dosage"));
+                v2.add(rs.getString("quantity_left"));
+                v2.add(rs.getString("monthly_requirement"));
+                v2.add(rs.getString("last_refill_date"));
+                d.addRow(v2);
             }
             
-            if (d.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(null, "No matching records found in your ward");
-            }
-            
-        } catch (ClassNotFoundException | SQLException ex) {
-            logger.log(java.util.logging.Level.SEVERE, "Error searching residents", ex);
-            JOptionPane.showMessageDialog(null, "Error occurred while searching: " + ex.getMessage());
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
-        try {
-            String name = txtname.getText().trim();
-            String ward = txtward.getText().trim();
-            
-            if (name.isEmpty() || ward.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Please fill in both name and ward fields to delete a resident");
-                return;
-            }
-            
-            // Validate that the ward matches employee's assigned ward
-            if (!ward.equals(employeeWard)) {
-                JOptionPane.showMessageDialog(null, "You can only delete residents from your assigned ward: " + employeeWard, "Access Denied", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            // Show confirmation dialog
-            int confirmResult = JOptionPane.showConfirmDialog(
-                null, 
-                "Are you sure you want to delete resident: " + name + " from ward: " + ward + "?", 
-                "Confirm Delete", 
-                JOptionPane.YES_NO_OPTION
-            );
-            
-            if (confirmResult != JOptionPane.YES_OPTION) {
-                return;
-            }
-            
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con1 = DriverManager.getConnection("jdbc:mysql://localhost/eden","root","");
-            
-            // Check if resident exists in employee's ward
-            pst = con1.prepareStatement("SELECT COUNT(*) FROM residents WHERE name = ? AND ward_id = ?");
-            pst.setString(1, name);
-            pst.setString(2, employeeWard);
-            ResultSet rs = pst.executeQuery();
-            
-            if (rs.next() && rs.getInt(1) == 0) {
-                JOptionPane.showMessageDialog(null, "Resident not found in your assigned ward!");
-                return;
-            }
-            
-            // Delete the resident (restricted to employee's ward)
-            pst = con1.prepareStatement("DELETE FROM residents WHERE name = ? AND ward_id = ?");
-            pst.setString(1, name);
-            pst.setString(2, employeeWard);
-            int rowsAffected = pst.executeUpdate();
-            
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Resident deleted successfully!");
-                txtname.setText("");
-                txtward.setText("");
-                table_update(); // Refresh the table
-            } else {
-                JOptionPane.showMessageDialog(null, "Failed to delete resident!");
+            if (!found) {
+                JOptionPane.showMessageDialog(this, "No medications found with that name");
             }
             
         } catch (ClassNotFoundException | SQLException ex) {
-            logger.log(java.util.logging.Level.SEVERE, "Error deleting resident", ex);
-            JOptionPane.showMessageDialog(null, "Error occurred while deleting resident: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error searching: " + ex.getMessage());
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_findButtonActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        try {
-            String name = txtname.getText().trim();
-            String ward = txtward.getText().trim();
-            
-            if (name.isEmpty() || ward.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Please fill in both name and ward fields");
-                return;
-            }
-            
-            // Validate that the ward matches employee's assigned ward
-            if (!ward.equals(employeeWard)) {
-                JOptionPane.showMessageDialog(null, "You can only add residents to your assigned ward: " + employeeWard, "Access Denied", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            // Check if resident with same name exists
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con1 = DriverManager.getConnection("jdbc:mysql://localhost/eden","root","");
-            pst = con1.prepareStatement("SELECT COUNT(*) FROM residents WHERE name = ?");
-            pst.setString(1, name);
-            ResultSet rs = pst.executeQuery();
-            
-            if (rs.next() && rs.getInt(1) > 0) {
-                JOptionPane.showMessageDialog(null, "Resident already exists!");
-                return;
-            }
-            
-            // If no existing resident found, proceed with insert (restricted to employee's ward)
-            pst = con1.prepareStatement("insert into residents(name,ward_id)values(?,?)");
-            pst.setString(1, name);
-            pst.setString(2, employeeWard); // Force to employee's ward
-            pst.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Resident Added Successfully to Ward " + employeeWard);
-            
-            txtname.setText("");
-            txtward.setText("");
-            table_update();
-            
-        } catch (ClassNotFoundException | SQLException ex) {
-            logger.log(java.util.logging.Level.SEVERE, "Error adding resident", ex);
-            JOptionPane.showMessageDialog(null, "Error occurred while adding resident: " + ex.getMessage());
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // Edit selected resident. Try to find resident by exact name and ward if provided,
-        // otherwise use the selected row in the table.
-        String name = txtname.getText().trim();
-        String ward = txtward.getText().trim();
-        
-        if (name.isEmpty() || ward.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please fill in both name and ward fields");
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        int selectedRow = InventoryViewTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a medication to delete");
             return;
         }
 
-        // Validate that the ward matches employee's assigned ward
-        if (!ward.equals(employeeWard)) {
-            JOptionPane.showMessageDialog(null, "You can only edit residents from your assigned ward: " + employeeWard, "Access Denied", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        String medId = InventoryViewTable.getValueAt(selectedRow, 0).toString();
+        String medName = InventoryViewTable.getValueAt(selectedRow, 1).toString();
 
+        int confirmResult = JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to delete medication: " + medName + "?",
+            "Confirm Delete",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE
+        );
+
+        if (confirmResult == JOptionPane.YES_OPTION) {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con1 = DriverManager.getConnection("jdbc:mysql://localhost/eden","root","");
+                pst = con1.prepareStatement("DELETE FROM medications WHERE medication_id = ?");
+                pst.setString(1, medId);
+                
+                int result = pst.executeUpdate();
+                if (result > 0) {
+                    JOptionPane.showMessageDialog(this, "Medication deleted successfully");
+                    table_update(); // Refresh table
+                } else {
+                    JOptionPane.showMessageDialog(this, "Failed to delete medication");
+                }
+            } catch (ClassNotFoundException | SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Error deleting: " + ex.getMessage());
+                logger.log(java.util.logging.Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // Open SelectResident dialog first
+        SelectResident selectDialog = new SelectResident(this, true);
+        selectDialog.setVisible(true);
+        String residentIdStr = selectDialog.getSelectedResidentId();
+        if (residentIdStr != null && !residentIdStr.isEmpty()) {
+            try {
+                int residentId = Integer.parseInt(residentIdStr);
+                AddMedication dialog = new AddMedication(this, true, residentId);
+                dialog.setVisible(true);
+                // Refresh the table after dialog closes
+                table_update();
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Invalid resident ID selected.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No resident selected. Medication not added.");
+        }
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void refillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refillButtonActionPerformed
         try {
+            String name = txtname.getText().trim();
+            String quantityStr = txtward.getText().trim();
+            String amountStr = txtward1.getText().trim();
+            if (name.isEmpty() || quantityStr.isEmpty() || amountStr.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter medication name, quantity, and amount spent");
+                return;
+            }
+            int quantity;
+            double amountSpent;
+            try {
+                quantity = Integer.parseInt(quantityStr);
+                if (quantity <= 0) {
+                    JOptionPane.showMessageDialog(this, "Please enter a valid positive quantity");
+                    return;
+                }
+                amountSpent = Double.parseDouble(amountStr);
+                if (amountSpent < 0) {
+                    JOptionPane.showMessageDialog(this, "Please enter a valid amount spent");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Please enter valid numbers for quantity and amount spent");
+                return;
+            }
             Class.forName("com.mysql.cj.jdbc.Driver");
             con1 = DriverManager.getConnection("jdbc:mysql://localhost/eden","root","");
-            // Find resident by exact match of name and ward (restricted to employee's ward)
-            pst = con1.prepareStatement("SELECT resident_id FROM residents WHERE name = ? AND ward_id = ? LIMIT 1");
+            con1.setAutoCommit(false); // Start transaction
+            // Get medication details and current ward amount
+            String medQuery = "SELECT m.medication_id, m.quantity_left, r.ward_id, w.assigned_amount " +
+                             "FROM medications m " +
+                             "JOIN residents r ON m.resident_id = r.resident_id " +
+                             "JOIN wards w ON w.ward_id = r.ward_id " +
+                             "WHERE m.name = ?";
+            pst = con1.prepareStatement(medQuery);
             pst.setString(1, name);
-            pst.setString(2, employeeWard);
             ResultSet rs = pst.executeQuery();
             if (!rs.next()) {
-                JOptionPane.showMessageDialog(null, "Resident not found in your assigned ward");
+                con1.rollback();
+                JOptionPane.showMessageDialog(this, "Medication not found or not linked to a ward");
                 return;
             }
-            int residentId = rs.getInt("resident_id");
-
-            EditResident edialog = new EditResident((java.awt.Frame) this, true, residentId, name, employeeWard);
-            edialog.setLocationRelativeTo(this);
-            edialog.setVisible(true);
+            int currentQty = rs.getInt("quantity_left");
+            String wardId = rs.getString("ward_id");
+            double currentWardAmount = rs.getDouble("assigned_amount");
+            
+            // Check if ward has enough budget
+            if (currentWardAmount < amountSpent) {
+                con1.rollback();
+                JOptionPane.showMessageDialog(this, "Insufficient ward budget. Current budget: $" + String.format("%.2f", currentWardAmount));
+                return;
+            }
+            // Update medication quantity and last refill date
+            String updateMedQuery = "UPDATE medications SET quantity_left = ?, last_refill_date = CURRENT_DATE WHERE name = ?";
+            pst = con1.prepareStatement(updateMedQuery);
+            pst.setInt(1, currentQty + quantity);
+            pst.setString(2, name);
+            pst.executeUpdate();
+            // Update ward assigned amount
+            String updateWardQuery = "UPDATE wards SET assigned_amount = (assigned_amount - ?) WHERE ward_id = ?";
+            pst = con1.prepareStatement(updateWardQuery);
+            pst.setDouble(1, amountSpent);
+            pst.setString(2, employeeWard);
+            int wardUpdateResult = pst.executeUpdate();
+            
+            if (wardUpdateResult == 0) {
+                con1.rollback();
+                JOptionPane.showMessageDialog(this, "Failed to update ward budget. Please try again.");
+                return;
+            }
+            
+            // Verify the update
+            String verifyQuery = "SELECT assigned_amount FROM wards WHERE ward_id = ?";
+            pst = con1.prepareStatement(verifyQuery);
+            pst.setString(1, wardId);
+            ResultSet verifyRs = pst.executeQuery();
+            
+            if (verifyRs.next()) {
+                double newAmount = verifyRs.getDouble("assigned_amount");
+                con1.commit();
+                JOptionPane.showMessageDialog(this, String.format("Ward budget updated successfully", newAmount));
+            } else {
+                con1.rollback();
+                JOptionPane.showMessageDialog(this, "Failed to verify ward budget update. Please try again.");
+                return;
+            }
+            JOptionPane.showMessageDialog(this, "Medication refilled and ward budget updated successfully");
+            table_update();
+            txtname.setText("");
+            txtward.setText("");
+            txtward1.setText("");
         } catch (ClassNotFoundException | SQLException ex) {
-            logger.log(java.util.logging.Level.SEVERE, "Error opening edit dialog", ex);
-            JOptionPane.showMessageDialog(null, "Error opening edit dialog: " + ex.getMessage());
+            try {
+                if (con1 != null) con1.rollback();
+            } catch (SQLException e) {
+                logger.log(java.util.logging.Level.SEVERE, "Error rolling back", e);
+            }
+            JOptionPane.showMessageDialog(this, "Error refilling: " + ex.getMessage());
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (con1 != null) {
+                    con1.setAutoCommit(true);
+                    con1.close();
+                }
+            } catch (SQLException ex) {
+                logger.log(java.util.logging.Level.SEVERE, "Error closing connection", ex);
+            }
         }
-        table_update();
-       
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_refillButtonActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         int confirmResult = JOptionPane.showConfirmDialog(
@@ -618,12 +637,12 @@ public class EResidentManagement1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void RButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RButtonActionPerformed
-        
+        this.dispose();
+        new EResidentManagement1(employeeWard).setVisible(true);
     }//GEN-LAST:event_RButtonActionPerformed
 
     private void InventoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InventoryButtonActionPerformed
-        this.dispose();
-        new EInventoryManagement(employeeWard).setVisible(true);
+        // TODO add your handling code here:
     }//GEN-LAST:event_InventoryButtonActionPerformed
 
     private void doctorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doctorButtonActionPerformed
@@ -658,23 +677,26 @@ public class EResidentManagement1 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton InventoryButton;
+    private javax.swing.JTable InventoryViewTable;
     private javax.swing.JButton RButton;
-    private javax.swing.JTable ResidentViewTable;
+    private javax.swing.JButton addButton;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JButton doctorButton;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton findButton;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton refillButton;
     private javax.swing.JTextField txtname;
     private javax.swing.JTextField txtward;
+    private javax.swing.JTextField txtward1;
     private javax.swing.JLabel wardLabel;
     // End of variables declaration//GEN-END:variables
 }

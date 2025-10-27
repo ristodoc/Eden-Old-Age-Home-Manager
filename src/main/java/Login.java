@@ -214,11 +214,8 @@ public class Login extends javax.swing.JFrame {
             con = DriverManager.getConnection("jdbc:mysql://localhost/eden", "root", "");
             
             // Query to check username, password, role and get ward for employees
-            if ("WardEmployee".equals(role)) {
                 pst = con.prepareStatement("SELECT ward FROM users WHERE name = ? AND password = ? AND role = ?");
-            } else {
-                pst = con.prepareStatement("SELECT ward FROM users WHERE name = ? AND password = ? AND role = ?");
-            }
+            
             pst.setString(1, username);
             pst.setString(2, password);
             pst.setString(3, role);

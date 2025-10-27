@@ -564,7 +564,8 @@ public class AResidentManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_EButtonActionPerformed
 
     private void RepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RepButtonActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new AReport().setVisible(true);
     }//GEN-LAST:event_RepButtonActionPerformed
 
     /**

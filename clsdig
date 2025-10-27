@@ -1,0 +1,225 @@
+# UML Class Diagram (Mermaid Format)
+
+```mermaid
+classDiagram
+    %% Base Classes
+    class JFrame {
+        <<Interface>>
+    }
+    class JDialog {
+        <<Interface>>
+    }
+
+    %% Main Management Frames
+    class Login {
+        +Login()
+        -logger: Logger
+        -initComponents()
+        -validateLogin()
+        -openAdminDashboard()
+        -openEmployeeDashboard(String ward)
+    }
+
+    class AdminDash {
+        +AdminDash()
+        -logger: Logger
+        -initComponents()
+    }
+
+    class AEmployeeManagement {
+        +AEmployeeManagement()
+        -logger: Logger
+        -con1: Connection
+        -pst: PreparedStatement
+        -table_update()
+        -txtname: String
+        -txtward: String
+        -EmployeeViewTable: JTable
+    }
+
+    class AResidentManagement {
+        +AResidentManagement()
+        -logger: Logger
+        -con1: Connection
+        -pst: PreparedStatement
+        -table_update()
+        -ResidentViewTable: JTable
+    }
+
+    class AFinanceManagement {
+        +AFinanceManagement()
+        -logger: Logger
+        -con1: Connection
+        -pst: PreparedStatement
+        -table_update()
+        -loadAdminSavings()
+        -populateWardCombo()
+        -WardViewTable: JTable
+    }
+
+    class AReport {
+        +AReport()
+        -logger: Logger
+        -con1: Connection
+        -pst: PreparedStatement
+        -loadBudgetData()
+        -budgetTable: JTable
+    }
+
+    class EResidentManagement1 {
+        +EResidentManagement1()
+        +EResidentManagement1(String employeeWard)
+        -logger: Logger
+        -employeeWard: String
+        -con1: Connection
+        -pst: PreparedStatement
+        -table_update()
+        -ResidentViewTable: JTable
+        -updateWardLabel()
+        -setupEmployeeRestrictions()
+    }
+
+    class EInventoryManagement {
+        +EInventoryManagement()
+        +EInventoryManagement(String employeeWard)
+        -logger: Logger
+        -employeeWard: String
+        -con1: Connection
+        -pst: PreparedStatement
+        -table_update()
+        -updateWardLabel()
+        -InventoryViewTable: JTable
+    }
+
+    class EDoctorVisitsManagement {
+        +EDoctorVisitsManagement()
+        +EDoctorVisitsManagement(String employeeWard)
+        -logger: Logger
+        -employeeWard: String
+        -con1: Connection
+        -pst: PreparedStatement
+        -table_update()
+        -updateWardLabel()
+        -docVisitsTable: JTable
+    }
+
+    %% Dialogs
+    class AddDoctorVisit {
+        +AddDoctorVisit(Frame parent, boolean modal, int residentId)
+        -logger: Logger
+        -con: Connection
+        -pst: PreparedStatement
+        -residentId: int
+        -loadDoctors()
+        -saveDoctorVisit()
+    }
+
+    class AddMedication {
+        +AddMedication(Frame parent, boolean modal)
+        +AddMedication(Frame parent, boolean modal, int residentId)
+        -logger: Logger
+        -resident_id: int
+        -calcMonthlyRequirement(int, int): int
+    }
+
+    class EditResident {
+        +EditResident(Frame parent, boolean modal)
+        +EditResident(Frame parent, boolean modal, int residentId, String name, String ward)
+        -logger: Logger
+        -resident_id: int
+        -residentName: String
+        -residentWard: String
+        -con1: Connection
+        -pst: PreparedStatement
+        -medTable_update()
+        -docVisitTable_update()
+    }
+
+    class EmployeeDetails {
+        +EmployeeDetails(Frame parent, boolean modal)
+        +EmployeeDetails(Frame parent, boolean modal, String empId)
+        -logger: Logger
+        -editingEmpId: String
+        -isEdit: boolean
+        -loadEmployee(String)
+    }
+
+    class SelectResident {
+        +SelectResident(Frame parent, boolean modal)
+        +getSelectedResidentId(): String
+        +getSelectedResidentName(): String
+        -logger: Logger
+        -selectedResidentId: String
+        -selectedResidentName: String
+        -populateResidentComboBox()
+    }
+
+    %% Doctor UI
+    class Doctor {
+        +Doctor()
+        -logger: Logger
+        -initComponents()
+    }
+
+    %% Inheritance Relationships
+    JFrame <|-- Login
+    JFrame <|-- AdminDash
+    JFrame <|-- AEmployeeManagement
+    JFrame <|-- AResidentManagement
+    JFrame <|-- AFinanceManagement
+    JFrame <|-- AReport
+    JFrame <|-- EResidentManagement1
+    JFrame <|-- EInventoryManagement
+    JFrame <|-- EDoctorVisitsManagement
+    JFrame <|-- Doctor
+    JDialog <|-- AddDoctorVisit
+    JDialog <|-- AddMedication
+    JDialog <|-- EditResident
+    JDialog <|-- EmployeeDetails
+    JDialog <|-- SelectResident
+
+    %% Navigation Relationships
+    Login --> AdminDash : creates >
+    Login --> EResidentManagement1 : creates >
+    AdminDash --> AEmployeeManagement : navigates to >
+    AdminDash --> AResidentManagement : navigates to >
+    AdminDash --> AFinanceManagement : navigates to >
+    AdminDash --> AReport : navigates to >
+
+    %% Employee Dashboard Navigation
+    EResidentManagement1 --> EInventoryManagement : navigates to >
+    EResidentManagement1 --> EDoctorVisitsManagement : navigates to >
+    EInventoryManagement --> EDoctorVisitsManagement : navigates to >
+    EInventoryManagement --> EResidentManagement1 : navigates to >
+    EDoctorVisitsManagement --> EInventoryManagement : navigates to >
+    EDoctorVisitsManagement --> EResidentManagement1 : navigates to >
+
+    %% Dialog Usage Relationships
+    AEmployeeManagement ..> EmployeeDetails : creates
+    AResidentManagement ..> EditResident : creates
+    EResidentManagement1 ..> EditResident : creates
+    EInventoryManagement ..> SelectResident : creates
+    EInventoryManagement ..> AddMedication : creates
+    EDoctorVisitsManagement ..> SelectResident : creates
+    EDoctorVisitsManagement ..> AddDoctorVisit : creates
+    EditResident ..> AddMedication : creates
+    EditResident ..> AddDoctorVisit : creates
+    AddDoctorVisit ..> Doctor : uses
+
+    %% Database Relationships
+    class Database {
+        <<Interface>>
+    }
+    Database -- AEmployeeManagement : uses
+    Database -- AResidentManagement : uses
+    Database -- AFinanceManagement : uses
+    Database -- AReport : uses
+    Database -- EResidentManagement1 : uses
+    Database -- EInventoryManagement : uses
+    Database -- EDoctorVisitsManagement : uses
+    Database -- AddDoctorVisit : uses
+    Database -- AddMedication : uses
+    Database -- EditResident : uses
+    Database -- EmployeeDetails : uses
+    Database -- SelectResident : uses
+```

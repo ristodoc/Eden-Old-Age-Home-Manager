@@ -183,7 +183,7 @@ public class AFinanceManagement extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel7.setText("Finance");
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Savings", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Savings", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 3, 12), new java.awt.Color(102, 102, 102))); // NOI18N
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel15.setText("Add Amount :");
@@ -260,7 +260,7 @@ public class AFinanceManagement extends javax.swing.JFrame {
         jLabel14.setText("Amount :");
 
         AllotButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        AllotButton.setText("Allot Amount");
+        AllotButton.setText("Add Funds");
         AllotButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AllotButtonActionPerformed(evt);
@@ -558,7 +558,8 @@ public class AFinanceManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_EButtonActionPerformed
 
     private void RepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RepButtonActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new AReport().setVisible(true);
     }//GEN-LAST:event_RepButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed

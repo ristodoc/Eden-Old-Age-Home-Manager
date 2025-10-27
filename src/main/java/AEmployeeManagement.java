@@ -492,7 +492,8 @@ public class AEmployeeManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_FButtonActionPerformed
 
     private void RButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RButtonActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new AResidentManagement().setVisible(true);
     }//GEN-LAST:event_RButtonActionPerformed
 
     private void EButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EButtonActionPerformed
@@ -500,7 +501,8 @@ public class AEmployeeManagement extends javax.swing.JFrame {
     }//GEN-LAST:event_EButtonActionPerformed
 
     private void RepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RepButtonActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new AReport().setVisible(true);
     }//GEN-LAST:event_RepButtonActionPerformed
 
     private void addEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeButtonActionPerformed
